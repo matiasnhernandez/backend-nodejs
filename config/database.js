@@ -6,7 +6,6 @@ mongoose.connect(process.env.MONGO_URL, connectionOptions).
   catch(error => handleError(error));
 
 function handleError(error) {
-    console.log('MONGO_URL: ' + process.env.MONGO_URL);
     logger.error(error);
 }
 mongoose.Promise = global.Promise;
