@@ -1,0 +1,333 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Backend-nodejs",
+    "description": "Backend curso practitioner",
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "usuario",
+      "description": "usuario de la aplicacion"
+    }
+  ],
+  "paths": {
+    "/test": {
+      "get": {
+        "tags": [
+          "test api"
+        ],
+        "summary": "Test api",
+        "description": "Request para realizar test de la api",
+        "operationId": "test",
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "post": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Create usuario",
+        "description": "This can only be done by the logged in usuario.",
+        "operationId": "createUsuario",
+        "requestBody": {
+          "description": "Created usuario object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/usuarios/login": {
+      "post": {
+        "tags": [
+          "usuario"
+        ],
+        "security": [],
+        "summary": "Logs usuario into the system",
+        "operationId": "loginUsuario",
+        "requestBody": {
+          "description": "login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/usuarios/logout": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Logs out current logged in usuario session",
+        "operationId": "logoutUsuario",
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/usuarios/": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "get all users",
+        "operationId": "getAll",
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/usuarios/{username}": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Get usuario by usuario name",
+        "operationId": "getUsuarioByName",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use usuario1 for testing. ",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Usuario not found",
+            "content": {}
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Updated usuario",
+        "description": "This can only be done by the logged in usuario.",
+        "operationId": "updateUsuario",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Updated usuario object",
+          "content": {
+            "*/*": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid usuario supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Usuario not found",
+            "content": {}
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      },
+      "delete": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Delete usuario",
+        "description": "This can only be done by the logged in usuario.",
+        "operationId": "deleteUsuario",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied",
+            "content": {}
+          },
+          "404": {
+            "description": "Usuario not found",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "LoginRequest"
+        }
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "fechaNacimiento": {
+            "type": "string"
+          },
+          "createdDate": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "Usuario"
+        }
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean"
+          },
+          "codigo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "mensaje": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        },
+        "xml": {
+          "name": "ApiResponse"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Backend curso practitioner",
+    "version": "1.0.0",
+    "title": "Backend-nodejs"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "usuario",
+      "description": "usuario de la aplicacion"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/test": {
+      "get": {
+        "tags": [
+          "test api"
+        ],
+        "summary": "Test api",
+        "description": "Request para realizar test de la api",
+        "operationId": "test",
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "post": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Create usuario",
+        "description": "This can only be done by the logged in usuario.",
+        "operationId": "createUsuario",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created usuario object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Usuario"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/usuarios/login": {
+      "post": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Logs usuario into the system",
+        "description": "",
+        "operationId": "loginUsuario",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created usuario object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the usuario"
+              },
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/usuarios/logout": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Logs out current logged in usuario session",
+        "description": "",
+        "operationId": "logoutUsuario",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/usuarios/": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "get all users",
+        "description": "",
+        "operationId": "getAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/usuarios/{username}": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Get usuario by usuario name",
+        "description": "",
+        "operationId": "getUsuarioByName",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be fetched. Use usuario1 for testing. ",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Usuario"
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "Usuario not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Updated usuario",
+        "description": "This can only be done by the logged in usuario.",
+        "operationId": "updateUsuario",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated usuario object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Usuario"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid usuario supplied"
+          },
+          "404": {
+            "description": "Usuario not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Delete usuario",
+        "description": "This can only be done by the logged in usuario.",
+        "operationId": "deleteUsuario",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "Usuario not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "LoginRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "LoginRequest"
+      }
+    },
+    "Usuario": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "hash": {
+          "type": "string"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "apellido": {
+          "type": "string"
+        },
+        "direccion": {
+          "type": "string"
+        },
+        "fechaNacimiento": {
+          "type": "string"
+        },
+        "createdDate": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Usuario"
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
