@@ -33,6 +33,7 @@ let prefix = '/api/v1/';
 app.use(prefix + 'test', require('./api/v1/routes/test.routes'));
 app.use(prefix + 'usuarios', require('./api/v1/routes/usuario.routes'));
 app.use(prefix + 'cuentas', require('./api/v1/routes/cuenta.routes'));
+app.use(prefix + 'sucursales', require('./api/v1/routes/sucursal.routes'));
 
 // global error handler
 app.use(errorHandler);
