@@ -8,16 +8,15 @@ const jwtMiddleware = require('./middleware/jwt-middleware');
 const errorHandler = require('./middleware/error-handler').errorHandler;
 const notFoundHandler = require('./middleware/error-handler').notFoundHandler;
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./openapi.json');
+const swaggerDocument = require('./swagger.json');
 const loggerExpress = require('./middleware/logger-express');
 const logger = require('./helpers/logger')(module);
 
 
-console.log(process.env.PORT);
-console.log(process.env.MONGO_URL);
-console.log(process.env.JWT_SECRET);
-console.log(process.env.JWT_EXPIRES);
-console.log(process.env.JWT_EXCLUDE_PATH);
+console.log('PORT:        ' + process.env.PORT);
+console.log('MONGO_URL:   ' + process.env.MONGO_URL);
+console.log('JWT_SECRET:  ' + process.env.JWT_SECRET);
+console.log('JWT_EXPIRES: ' + process.env.JWT_EXPIRES);
 
 app.use(loggerExpress.expressLogger);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
