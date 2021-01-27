@@ -13,5 +13,6 @@ mongoose.Promise = global.Promise;
 module.exports = {
     Usuario: require('../api/v1/models/usuario.model'),
     Cuenta: require('../api/v1/models/cuenta.model'),
-    Sucursal: require('../api/v1/models/sucursal.model')
+    Sucursal: require('../api/v1/models/sucursal.model'),
+    Transferencia: require('../api/v1/models/transferencia.model')
 };
