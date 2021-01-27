@@ -35,10 +35,12 @@
 - production.env
 
 
-    PORT=3000
-    MONGO_URL='mongodb://localhost/backend-nodejs'
-    JWT_SECRET='JWT SECRET PASSWORD'
-    JWT_EXPIRES='1d'
+```
+PORT=3000
+MONGO_URL='mongodb://localhost/backend-nodejs'
+JWT_SECRET='JWT SECRET PASSWORD'
+JWT_EXPIRES='1d'
+```
     
 ### Swagger docs
 
