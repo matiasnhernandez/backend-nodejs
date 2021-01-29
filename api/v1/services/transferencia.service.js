@@ -13,8 +13,30 @@ module.exports = {
 
 async function getAll(userId) {
 
-    //return await Transferencia.find({ usuario: userId });
-    return await Transferencia.find().populate('idCuentaOrigen').populate('idCuentaDestino');
+    //return await Transferencia.find().populate('idCuentaOrigen').populate('idCuentaDestino');
+    const transferencias = await Transferencia.find({usuario: userId}).populate('idCuentaOrigen').populate('idCuentaDestino');
+    
+    return await filtrarTransferencias(transferencias);
+}
+
+async function filtrarTransferencias(transferencias){
+
+    var transfEdit = [];
+
+    for (let index = 0; index < transferencias.length; index++) {
+        const transferencia = transferencias[index];
+
+        var cuentaOrigen =  await cuentaService.getById(transferencia.idCuentaOrigen);
+        var cuentaDestino = await cuentaService.getById(transferencia.idCuentaDestino);
+
+        if (cuentaOrigen != null && cuentaDestino != null){
+            transfEdit.push(transferencia);
+        }
+
+    }
+
+    return transfEdit;
+
 }
 
 async function getById(id) {

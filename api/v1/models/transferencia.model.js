@@ -39,6 +39,6 @@ TransferenciaSchema.set('toJSON', {
       ret.importe = ret.importe.toString();
       return ret;
     },
-  });
+});
 
 module.exports = mongoose.model('Transferencia', TransferenciaSchema);
